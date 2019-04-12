@@ -3,10 +3,11 @@
     height: 42px;
     width: 42px;
     position: relative;
-    display: block;
+    display: inline-block;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-clip: content-box;
+    vertical-align: inherit;
     padding: 4px;
 
     &--small {

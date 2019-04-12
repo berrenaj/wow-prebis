@@ -3,8 +3,9 @@ import ItemIcon from './ItemIcon';
 
 export default (props) => {
   return (
-    <p className="item">
-      <ItemIcon size="large" {...props } />{props.name}
-    </p>
+    <React.Fragment>
+      <ItemIcon {...props } />
+      { props.name }
+  	</React.Fragment>
   );
 }

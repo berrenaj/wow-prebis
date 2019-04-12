@@ -1,6 +1,7 @@
 import React from 'react';
 import * as UTILS from '../../utils';
 import Item from '../Item';
+import Table from '../Table';
 
 export const Header = (props) => {
   let items = props.data.getItems();
@@ -13,8 +14,33 @@ export const Header = (props) => {
 };
 
 export class Body extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      layout: 'table'
+    };
+  }
+
+  getTableLayout() {
     let items = this.props.data.getItems();
-    return items.map((item, i) => <Item {...item} key={ i } />);
+    let rows = items.map((item, i) => {
+      return {
+        data: [
+          <Item {...item} key={ i } />,
+          item.lvl,
+          item.reqlvl,
+          [ item.stamina, item.spirit, item.strength, item.agility, item.intellect ].join(' / ')
+        ]
+      };
+    });
+
+    return (
+      <Table headers={ ['Name', 'Lvl', 'Req Lvl', 'Stats'] } rows={ rows } />
+    );
+  }
+
+  render() {
+    return this.getTableLayout();
   }
 };
