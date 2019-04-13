@@ -1,0 +1,104 @@
+@import '../variables';
+@import '../utilities';
+
+.item {
+  text-decoration: none;
+
+  &,
+  &__icon {
+    display: inline-block;
+    vertical-align: top; 
+
+    @include breakpoint(medium) {
+      vertical-align: inherit; 
+    }
+  }
+
+  &--quality1 {
+    color: map-get($quality, 1);
+  }
+
+  &--quality2 {
+    color: map-get($quality, 2);
+  }
+
+  &--quality3 {
+    color: map-get($quality, 3);
+  }
+
+  &--quality4 {
+    color: map-get($quality, 4);
+  }
+
+  &--quality5 {
+    color: map-get($quality, 5);
+  }
+
+  &--stat {
+    &:before {
+      @include breakpoint(medium, max) {
+        content: attr(title) ": ";
+      }
+    }
+    &[title="Strength"] {
+      color: map-get($item-color, Strength);
+    }
+    &[title="Spirit"] {
+      color: map-get($item-color, Spirit);
+    }
+    &[title="Stamina"] {
+      color: map-get($item-color, Stamina);
+    }
+    &[title="Agility"] {
+      color: map-get($item-color, Agility);
+    }
+    &[title="Intellect"] {
+      color: map-get($item-color, Intellect);
+    }
+  }
+
+  &__icon {
+    height: 42px;
+    width: 42px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-clip: content-box;
+    padding: 4px;
+    margin-right: 4px;
+
+    &--small {
+      height: 16px;
+      width: 16px;
+      padding: 2px;
+    }
+
+    &--large {
+      height: 68px;
+      width: 68px;
+      padding: 6px;
+    }
+
+    &:hover::after,
+    &:before {
+      height: 100%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+      content: '';
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
+    &:before {
+      background-image: url('/img/icon/border.png');
+    }
+
+    &:hover {
+      &:before {
+        background-image: url('/img/icon/border.png'), url('/img/icon/highlight.png');
+      }
+    }
+  }
+}

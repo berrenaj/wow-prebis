@@ -9,6 +9,8 @@ import Nav from './Nav';
 import * as EVENTS from '../events';
 import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
 
+import '../scss/global.scss';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ class App extends React.Component {
   render() {
     if (this.props.Data.status === EVENTS.LOADING_EQUIPMENT_START) {
       return (
-        <div className="loading">Loading</div>
+        <div className="app-loading"></div>
       );
     }
 
@@ -30,7 +32,7 @@ class App extends React.Component {
       </React.Fragment>
     ];
     return (
-      <div className="App">
+      <div className="App container">
         <Logo />
 
         <BrowserRouter>

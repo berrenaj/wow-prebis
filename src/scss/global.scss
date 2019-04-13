@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+TC');
+@import 'variables';
+@import 'utilities';
+
+* {
+  box-sizing: border-box;
+  font-family: 'Noto Sans TC', sans-serif;
+  color: $site-text-color;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  font-size: 100%;
+}
+
+body {
+  background-color: $site-background-color;
+}
+
+@keyframes fadeIn { 
+  from { opacity: 0; } 
+}
+
+.app-loading {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-image: url('/img/logo.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  animation: fadeIn 1s infinite alternate;
+}

@@ -3,9 +3,9 @@ import ItemIcon from './ItemIcon';
 
 export default (props) => {
   return (
-    <React.Fragment>
+    <a className={`item item--quality${props.quality}`} href={`https://classic.wowhead.com/item=${props.id}`} target="_blank" rel="noopener noreferrer">
       <ItemIcon {...props } />
       { props.name }
-  	</React.Fragment>
+  	</a>
   );
 }

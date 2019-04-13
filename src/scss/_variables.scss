@@ -1,0 +1,31 @@
+$quality: (
+  1: #FFF,
+  2: #1eff00,
+  3: #0070dd,
+  4: #a335ee,
+  5: #ff8000
+);
+
+$breakpoints: (
+  "small":       640px,
+  "medium":      768px,
+  "medium-wide": 1024px,
+  "large":       1170px,
+  "xlarge":      1200px
+);
+
+$site-text-color: #FFF;
+$site-padding: 1rem;
+$site-background-color: #242424;
+$item-table: (
+  font-size: 13px,
+  th-background-color: #1b1a1a,
+  border-style: 1px solid #3c3c3c
+);
+$item-color: (
+  Strength: red,
+  Agility: #fffc93,
+  Spirit: #dcd6ea,
+  Stamina: white,
+  Intellect: #8a8ae6
+);

@@ -1,19 +1,53 @@
 import React from 'react';
 
 export default (props) => {
-  let rows = props.rows || [];
-  let headers = props.headers || [];
-  let footers = props.footers || [];
+  const rows = props.rows || [];
+  const headers = props.headers || [];
+  const footers = props.footers || [];
 
   if (!rows.length && !headers.length) {
     return null;
   }
 
+  const createTableCells = (data, cellType) => {
+    return data.map((d, i) => {
+      var props = {};//typeof d === 'string' ? {} : (d.props || {});
+      props.key = i;
+      props.children = null;
+      
+      // Check primitive object
+      if (d !== Object(d)) {
+        props.children = d;
+
+      // Or check that data is part of a vanilla object
+      } else if (d.constructor === Object && d.data) {
+        props.children = d.data;
+      } else {
+        props.children = d;
+      }
+
+      return React.createElement(cellType, props);
+    });
+  };
+
+  const createTableRows = (data, cellType) => {
+    return data.filter((d) => {
+      // Test that each row is a vanilla js object
+      return d instanceof Object && (d.constructor === Object) && d.data;
+    }).map((d, i) => {
+      const props = d.props || {};
+      props.key = i;
+      return (
+        <tr {...props}>{ createTableCells(d.data, cellType)}</tr>
+      );
+    });
+  };
+
   return (
     <table className={ props.className }>
-      { headers.length > 0 && <thead><tr>{ headers.map((h, i) => <th {...h.props} key={ i }>{ h.data }</th>) }</tr></thead> }
-      { rows.length > 0 && <tbody>{ rows.map((r, i) => <tr key={ i } {...r.props}>{ r.data.map((td, j) => <td key={j}>{td}</td>) }</tr>) }</tbody> }
-      { footers.length > 0 && <tfoot><tr>{ rows.map((f, i) => <td {...f.props} key={ i }>{ f.data }</td>) }</tr></tfoot> }
+      { headers.length > 0 && <thead><tr>{ createTableCells(headers, 'th') }</tr></thead> }
+      { rows.length > 0 && <tbody>{ createTableRows(rows, 'td') }</tbody> }
+      { footers.length > 0 && <tfoot><tr>{ createTableCells(footers, 'td') }</tr></tfoot> }
     </table>
   );
 }

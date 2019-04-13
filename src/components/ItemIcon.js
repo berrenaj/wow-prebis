@@ -1,5 +1,5 @@
 import React from 'react';
-import '../scss/ItemIcon.scss';
+import '../scss/components/_Item.scss';
 
 export default (props) => {
   return (

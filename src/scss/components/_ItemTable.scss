@@ -1,0 +1,99 @@
+@import '../variables';
+@import '../utilities';
+
+table.items {
+  font-size: map-get($item-table, font-size);
+  width: 100%;
+  border-collapse: collapse;
+
+  thead {
+    th:first-of-type {
+      @include breakpoint(medium, max) {
+        text-align: center;
+      }
+    }
+    th:not(:first-of-type) {
+      @include breakpoint(medium, max) {
+        display: none;
+      }
+    }
+
+    tr {
+      background: map-get($item-table, th-background-color);
+    }
+  }
+
+  thead,
+  tbody,
+  tfoot {
+    tr {
+      border: map-get($item-table, border-style);
+
+      @include breakpoint(medium, max) {
+        padding: $site-padding;
+        display: block;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      border-top: none;
+    }
+  }
+
+  thead,
+  tbody,
+  tfoot {
+    tr {
+      td,
+      th {
+        &:first-of-type {
+          width: 100%;
+
+          @include breakpoint(medium) {
+            width: 300px;
+          }
+        }
+
+        &:not(:first-of-type) {
+          @include breakpoint(medium) {
+            text-align: center;
+          }
+        }
+
+        @include breakpoint(medium) {
+          padding: $site-padding / 2;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      position: relative;
+      @include breakpoint(medium, max) {
+        padding: $site-padding;
+        display: block;
+      }
+
+      td {
+        &:first-of-type {
+          @include breakpoint(medium, max) {
+            display: block;
+          }
+        }
+
+        &:not(:first-of-type) {
+          @include breakpoint(medium, max) {
+            &,
+            .item--stat {
+              display: inline-block;
+              padding: 3px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
