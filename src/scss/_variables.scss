@@ -7,6 +7,7 @@ $quality: (
 );
 
 $breakpoints: (
+  "xsmall":      480px,
   "small":       640px,
   "medium":      768px,
   "medium-wide": 1024px,
@@ -17,8 +18,9 @@ $breakpoints: (
 $site-text-color: #FFF;
 $site-padding: 1rem;
 $site-background-color: #242424;
+$site-font-size: 13px;
 $item-table: (
-  font-size: 13px,
+  font-size: $site-font-size,
   th-background-color: #1b1a1a,
   border-style: 1px solid #3c3c3c
 );

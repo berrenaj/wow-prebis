@@ -1,0 +1,50 @@
+@import '../variables';
+@import '../utilities/mixins';
+
+.logo {
+  @include clearfix();
+
+  > a {
+    text-decoration: none;
+  }
+
+  span {
+    text-indent: -9999px;
+    background-image: url('/img/logo.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+    width: 6rem;
+    height: 6rem;
+    margin: 0 auto;
+    display: block;
+
+    @include breakpoint(xsmall) {
+      float: left;
+      width: 4rem;
+      height: 4rem;
+      margin-right: 1rem;
+    }
+
+    &,
+    + small {
+      line-height: 1rem;
+
+      @include breakpoint(xsmall) {
+        line-height: 4rem;
+      }
+    }
+
+    + small {
+      display: block;
+      line-height: 1rem;
+      text-align: center;
+
+      @include breakpoint(xsmall) {
+        display: inline-block;
+        line-height: 4rem;
+        text-align: left;
+      }
+    }
+  }
+}

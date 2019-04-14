@@ -36,3 +36,13 @@ body {
   background-position: center center;
   animation: fadeIn 1s infinite alternate;
 }
+
+.emphasis {
+  font-size: $site-font-size;
+  font-weight: normal;
+  font-style: italic;
+}
+
+.pageheader {
+  margin-top: $site-padding * 2;
+}

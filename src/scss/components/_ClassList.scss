@@ -1,0 +1,159 @@
+@import '../variables';
+@import '../utilities/mixins';
+
+$classlist-item-dimension: 4rem;
+$classlist-item-dimension-small: 2rem;
+
+.classlist {
+  ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  > ul {
+    display: block;
+    position: relative;
+
+    @include breakpoint(medium) {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+    }
+
+    > li {
+      margin-bottom: $site-padding;
+      display: inline-block;
+      margin-right: $site-padding;
+      min-height: $classlist-item-dimension-small;
+      min-width: $classlist-item-dimension-small;
+
+      @include breakpoint(medium) {
+        min-height: $classlist-item-dimension;
+        min-width: $classlist-item-dimension;
+      }
+
+      > a {
+        display: block;
+        height: $classlist-item-dimension-small;
+        width: $classlist-item-dimension-small;
+        text-indent: -9999px;
+        background-image: url('/img/classes.png');
+        background-size: 128px 128px;
+
+        @include breakpoint(medium) {
+          height: $classlist-item-dimension;
+          width: $classlist-item-dimension;
+          background-size: 256px 256px;
+        }
+
+        &.classlist__class--mage {
+          background-position-x: -32px;
+          @include breakpoint(medium) {
+            background-position-x: -64px;
+          }
+        }
+
+        &.classlist__class--rogue {
+          background-position-x: -64px;
+          @include breakpoint(medium) {
+            background-position-x: -126px;
+          }
+        }
+
+        &.classlist__class--hunter {
+          background-position-y: -32px;
+          @include breakpoint(medium) {
+            background-position-y: -64px;
+          }
+        }
+
+        &.classlist__class--paladin {
+          background-position-y: -64px;
+          @include breakpoint(medium) {
+            background-position-y: -128px;
+          }
+        }
+
+        &.classlist__class--druid {
+          background-position-x: -96px;
+          @include breakpoint(medium) {
+            background-position-x: -190px;
+          }
+        }
+
+        &.classlist__class--priest {
+          background-position-y: -32px;
+          background-position-x: -64px;
+          @include breakpoint(medium) {
+            background-position-y: -64px;
+            background-position-x: -126px;
+          }
+        }
+
+        &.classlist__class--shaman {
+          background-position-x: -32px;
+          background-position-y: -32px;
+          @include breakpoint(medium) {
+            background-position-x: -64px;
+            background-position-y: -64px;
+          }
+        }
+
+        &.classlist__class--warlock {
+          background-position-x: -96px;
+          background-position-y: -32px;
+          @include breakpoint(medium) {
+            background-position-x: -190px;
+            background-position-y: -64px;
+          }
+        }
+
+
+      }
+
+      > a + ul {
+        position: absolute;
+        display: none;
+        left: 0;
+        bottom: -$site-padding;
+        font-size: $site-font-size;
+
+        > li {
+          display: inline-block;
+
+          &:first-of-type {
+            &:before {
+              content: "Specs: ";
+            }
+          }
+
+          > a {
+            color: map-get($item-color, Agility);
+            
+            &,
+            &:hover,
+            &:visited {
+              text-decoration: none;
+            }
+          }
+
+          &:after {
+            content: ",";
+            margin-right: 3px;
+          }
+
+          &:last-of-type {
+            &:after {
+              display: none;
+            }
+          }
+        }
+      }
+
+      > a.active + ul {
+        display: block;
+      }
+    }
+  }
+}

@@ -5,9 +5,8 @@ import ClassScreen from './screens/Class';
 import SpecScreen from './screens/Spec';
 import NotFoundScreen from './screens/NotFound';
 import ClassList from './ClassList';
-import Nav from './Nav';
 import * as EVENTS from '../events';
-import { BrowserRouter, Route, Switch, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import '../scss/global.scss';
 
@@ -25,28 +24,19 @@ class App extends React.Component {
       );
     }
 
-    let navLinks = [
-      <React.Fragment key="home">
-        <NavLink to={ { pathname: '/' } }>Home</NavLink>
-        <ClassList />
-      </React.Fragment>
-    ];
     return (
-      <div className="App container">
-        <Logo />
-
-        <BrowserRouter>
-          <Nav>
-            {navLinks}
-          </Nav>
+      <BrowserRouter>
+        <div className="App container">
+          <Logo />
+          <ClassList />
           <Switch>
-            <Route exact path="/" render={ () => <React.Fragment /> } />
+            <Route exact path="/" render={ () => <p><em className="emphasis">Choose a class to begin.</em></p> } />
             <Route exact path="/:class" component={ClassScreen} />
             <Route exact path="/:class/:spec" component={SpecScreen} />
             <Route render={ () => <NotFoundScreen /> } />
           </Switch>
-        </BrowserRouter>
-      </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }

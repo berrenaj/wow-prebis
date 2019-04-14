@@ -6,8 +6,12 @@ import '../../scss/components/_ItemTable.scss';
 
 export const Header = (props) => {
   let items = props.data.getItems();
+  let className = ['pageheader'];
+  if (props.className) {
+    className.push(props.className);
+  }
   return (
-    <header className={props.className}>
+    <header className={className.join(' ')}>
       <h2>{props.title}</h2>
       <p>{items.length} {UTILS.formatPlural(items.length, 'item', 'items')} found</p>
     </header>
@@ -48,6 +52,10 @@ export class TableLayout extends React.Component {
   }
 
   render() {
+    if (this.state.items.length === 0) {
+      return null;
+    }
+
     return (
       <Table className="items" headers={ ['Name', 'Lvl', 'Req Lvl', 'Armor', 'Stamina', 'Spirit', 'Strength', 'Agility', 'Intellect'] } rows={ this.getRows() } />
     );
