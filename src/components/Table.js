@@ -20,6 +20,8 @@ export default (props) => {
         props.children = d;
 
       // Or check that data is part of a vanilla object
+      } else if (typeof d === 'function') {
+        props.children = d();
       } else if (d.constructor === Object && d.data) {
         props.children = d.data;
       } else {

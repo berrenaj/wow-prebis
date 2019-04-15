@@ -28,27 +28,56 @@ export class TableLayout extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.name !== this.props.name) {
+    if (prevProps.class !== this.props.class || prevProps.spec !== this.props.spec) {
       this.setState({ items: this.props.items });
     }
   }
 
   getRows() {
     return this.state.items.map((item, i) => {
+      let r = [
+        <Item {...item} />,
+        <span className="label item--stat" title="Level">{ item.lvl }</span>,
+        <span className="label item--stat" title="Required Level">{ item.reqlvl }</span>,
+        <span className="label item--stat" title="Armor">{ item.armor }</span>,
+        <span className="label item--stat" title="Stamina">{ item.stamina }</span>,
+        <span className="label item--stat" title="Spirit">{ item.spirit }</span>
+      ];
+
+      if (this.isMelee()) {
+        r.push(<span className="label item--stat" title="Strength">{ item.strength }</span>);
+        r.push(<span className="label item--stat" title="Agility">{ item.agility }</span>);
+      }
+
+      if (this.isRanged()) {
+        r.push(<span className="label item--stat" title="Agility">{ item.agility }</span>);
+        r.push(<span className="label item--stat" title="Intellect">{ item.intellect }</span>);
+      }
+
+      if (this.isSpellcaster()) {
+        r.push(<span className="label item--stat" title="Intellect">{ item.intellect }</span>);
+      }
+
       return {
-        data: [
-          <Item {...item} />,
-          <span className="label item--stat" title="Level">{ item.lvl }</span>,
-          <span className="label item--stat" title="Required Level">{ item.reqlvl }</span>,
-          <span className="label item--stat" title="Armor">{ item.armor }</span>,
-          <span className="label item--stat" title="Stamina">{ item.stamina }</span>,
-          <span className="label item--stat" title="Spirit">{ item.spirit }</span>,
-          <span className="label item--stat" title="Strength">{ item.strength }</span>,
-          <span className="label item--stat" title="Agility">{ item.agility }</span>,
-          <span className="label item--stat" title="Intellect">{ item.intellect }</span>
-        ]
+        data: r
       };
     });
+  }
+
+  isMelee() {
+    return this._testSpec(['Warrior', 'Enchancement', 'Fury', 'Protection', 'Arms', 'Retribution', 'Feral', 'Rogue']);
+  }
+
+  isRanged() {
+    return this._testSpec(['Hunter']);
+  }
+
+  isSpellcaster() {
+    return this._testSpec(['Mage', 'Priest', 'Warlock', 'Paladin', 'Shaman', 'Druid']);
+  }
+
+  _testSpec(arr) {
+    return (arr.indexOf(this.props.spec) >= 0 || arr.indexOf(this.props.class) >= 0);
   }
 
   render() {
@@ -56,8 +85,19 @@ export class TableLayout extends React.Component {
       return null;
     }
 
+    let headers = [() => <span>Name</span>, 'Lvl', 'Req Lvl', 'Armor', 'Stamina', 'Spirit'];
+    if (this.isMelee()) {
+      headers = headers.concat(['Strength', 'Agility']);
+    }
+    if (this.isRanged()) {
+      headers = headers.concat(['Agility', 'Intellect']);
+    }
+    if (this.isSpellcaster()) {
+      headers = headers.concat(['Intellect']);
+    }
+
     return (
-      <Table className="items" headers={ ['Name', 'Lvl', 'Req Lvl', 'Armor', 'Stamina', 'Spirit', 'Strength', 'Agility', 'Intellect'] } rows={ this.getRows() } />
+      <Table className="items" headers={ headers } rows={ this.getRows() } />
     );
   }
 };
@@ -72,7 +112,11 @@ export class Body extends React.Component {
   }
 
   getTableLayout() {
-    return <TableLayout items={ this.props.data.getItems() } name={ this.props.data.name } />
+    return <TableLayout 
+      items={ this.props.data.getItems() } 
+      class={ this.props.data.class ? this.props.data.class.name : this.props.data.name } 
+      spec={ this.props.data.class ? this.props.data.name : null } 
+    />
   }
 
   render() {
