@@ -9,7 +9,9 @@ table.items {
   thead {
     th:first-of-type {
       @include breakpoint(medium, max) {
-        text-align: center;
+        text-align: left;
+        width: 100%;
+        display: block;
       }
     }
     th:not(:first-of-type) {

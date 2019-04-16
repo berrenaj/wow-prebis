@@ -3,6 +3,7 @@ import * as UTILS from '../../utils';
 import Item from '../Item';
 import Table from '../Table';
 import '../../scss/components/_ItemTable.scss';
+import '../../scss/components/_Search.scss';
 
 export const Header = (props) => {
   let items = props.data.getItems();
@@ -23,13 +24,21 @@ export class TableLayout extends React.Component {
     super(props);
 
     this.state = {
-      items: props.items
+      items: props.items,
+      search: false,
+      query: ''
     };
+
+    this.search = React.createRef();
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.class !== this.props.class || prevProps.spec !== this.props.spec) {
-      this.setState({ items: this.props.items });
+      this.setState({
+        items: this.props.items,
+        search: false,
+        query: ''
+      });
     }
   }
 
@@ -80,12 +89,51 @@ export class TableLayout extends React.Component {
     return (arr.indexOf(this.props.spec) >= 0 || arr.indexOf(this.props.class) >= 0);
   }
 
-  render() {
-    if (this.state.items.length === 0) {
-      return null;
+  startSearch() {
+    this.setState({ search: true }, () => {
+      this.search.current.focus();
+    });
+  }
+
+  stopSearch() {
+    if (this.state.query.length === 0) {
+      this.setState({ search: false });
+    }
+  }
+
+  searchItems(event) {
+    if (!event || !event.target) {
+      return;
     }
 
-    let headers = [() => <span>Name</span>, 'Lvl', 'Req Lvl', 'Armor', 'Stamina', 'Spirit'];
+    var items = [];
+    for (const i in this.props.items) {
+      var c = true;
+      if (typeof event.target.value === 'string' && event.target.value.length > 0) {
+        var test = this.props.items[i].name.search(new RegExp(event.target.value, 'i'));
+        c = (test >= 0);
+      }
+
+      if (c) {
+        items.push(this.props.items[i]);
+      }
+    }
+
+    this.setState({ query: event.target.value, items: items });
+  }
+
+  getNameHeader() {
+    return (
+      <div className="search" onClick={ this.startSearch.bind(this) }>
+        { !this.state.search && <span>Name</span> }
+        { this.state.search && <input ref={ this.search } defaultValue={ this.state.query } onChange={ this.searchItems.bind(this) } type="search" placeholder="Search items" onBlur={ this.stopSearch.bind(this) } /> }
+        { !this.state.search && <i className="fa fa-search" /> }
+      </div>
+    )
+  }
+
+  render() {
+    let headers = [this.getNameHeader(), 'Lvl', 'Req Lvl', 'Armor', 'Stamina', 'Spirit'];
     if (this.isMelee()) {
       headers = headers.concat(['Strength', 'Agility']);
     }

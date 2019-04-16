@@ -1,0 +1,32 @@
+@import '../variables';
+@import '../utilities/mixins';
+
+.search {
+  width: 100%;
+  position: relative;
+  cursor: pointer;
+
+  > span,
+  input {
+    display: inline-block;
+    border: 0 none;
+    background: none;
+    padding: $site-padding;
+    width: 100%;
+    text-align: left;
+  }
+
+  i {
+    position: absolute;
+    right: 0;
+    padding: $site-padding;
+    display: none;
+    top: 0;
+  }
+
+  &:hover {
+    i {
+      display: block; 
+    }
+  }
+}
