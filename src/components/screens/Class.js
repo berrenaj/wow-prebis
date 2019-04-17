@@ -6,7 +6,6 @@ import * as Page from './Page';
 
 class Class extends React.Component {
   render() {
-
     const cls = UTILS.getItemFromData(this.props.Data.equipment, this.props.match.params);
     if (!cls) {
       return (
@@ -15,10 +14,10 @@ class Class extends React.Component {
     }
 
     return (
-      <React.Fragment>
+      <Page.DocumentMeta title={ cls.name }>
         <Page.Header title={ cls.name } data={ cls } />
         <Page.Body data={ cls } />
-      </React.Fragment>
+      </Page.DocumentMeta>
     );
   }
 }

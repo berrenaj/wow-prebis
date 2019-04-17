@@ -4,6 +4,7 @@ import Logo from './Logo';
 import ClassScreen from './screens/Class';
 import SpecScreen from './screens/Spec';
 import NotFoundScreen from './screens/NotFound';
+import * as Page from './screens/Page';
 import ClassList from './ClassList';
 import * as EVENTS from '../events';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -30,7 +31,7 @@ class App extends React.Component {
           <Logo />
           <ClassList />
           <Switch>
-            <Route exact path="/" render={ () => <p><em className="emphasis">Choose a class to begin.</em></p> } />
+            <Route exact path="/" render={ () => <Page.DocumentMeta title="WoW Pre-Bis"><p><em className="emphasis">Choose a class to begin.</em></p></Page.DocumentMeta> } />
             <Route exact path="/:class" component={ClassScreen} />
             <Route exact path="/:class/:spec" component={SpecScreen} />
             <Route render={ () => <NotFoundScreen /> } />

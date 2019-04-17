@@ -6,7 +6,6 @@ import * as UTILS from '../../utils';
 
 class Spec extends React.Component {
   render() {
-
     const spec = UTILS.getItemFromData(this.props.Data.equipment, this.props.match.params);
     if (!spec) {
       return (
@@ -14,11 +13,13 @@ class Spec extends React.Component {
       );
     }
 
+    let title = spec.name + ' ' + spec.class.name;
+
     return (
-      <React.Fragment>
-        <Page.Header title={ spec.name + ' ' + spec.class.name } data={ spec } />
+      <Page.DocumentMeta title={ title }>
+        <Page.Header title={ title } data={ spec } />
         <Page.Body data={ spec } />
-      </React.Fragment>
+      </Page.DocumentMeta>
     );
   }
 }

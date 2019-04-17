@@ -5,8 +5,24 @@ import Table from '../Table';
 import '../../scss/components/_ItemTable.scss';
 import '../../scss/components/_Search.scss';
 
+export class DocumentMeta extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    let title = "WoW Pre-Bis";
+
+    if (props.title) {
+      title = props.title + ' | ' + title;
+    }
+    document.title = title;
+  }
+
+  render() {
+    return this.props.children;
+  }
+};
+
 export const Header = (props) => {
-  let items = props.data.getItems();
   let className = ['pageheader'];
   if (props.className) {
     className.push(props.className);
@@ -14,7 +30,6 @@ export const Header = (props) => {
   return (
     <header className={className.join(' ')}>
       <h2>{props.title}</h2>
-      <p>{items.length} {UTILS.formatPlural(items.length, 'item', 'items')} found</p>
     </header>
   );
 };
@@ -144,8 +159,13 @@ export class TableLayout extends React.Component {
       headers = headers.concat(['Intellect']);
     }
 
+    const rows = this.getRows();
+
     return (
-      <Table className="items" headers={ headers } rows={ this.getRows() } />
+      <React.Fragment>
+        <p>{rows.length} {UTILS.formatPlural(rows.length, 'item', 'items')} found</p>
+        <Table className="items" headers={ headers } rows={ rows } />
+      </React.Fragment>
     );
   }
 };
