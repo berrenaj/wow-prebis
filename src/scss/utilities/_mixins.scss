@@ -10,6 +10,30 @@
   }
 }
 
+@mixin normallist() {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    > a {
+      font-size: $site-font-size;
+      color: map-get($quality, 2);
+      cursor: pointer;
+
+      &.active {
+        text-decoration: underline;
+      }
+      
+      &,
+      &:hover:not(.active),
+      &:visited:not(.active) {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
 @mixin inlinelist($prefix) {
   margin: 0;
   padding: 0;
@@ -26,7 +50,7 @@
 
     > a {
       font-size: $site-font-size;
-      color: map-get($item-color, Agility);
+      color: map-get($quality, 2);
       cursor: pointer;
 
       &.active {

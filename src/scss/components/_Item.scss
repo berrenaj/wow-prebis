@@ -7,7 +7,7 @@
   &,
   &__icon {
     display: inline-block;
-    vertical-align: top; 
+    vertical-align: top;
 
     @include breakpoint(medium) {
       vertical-align: inherit; 
@@ -99,6 +99,26 @@
       &:before {
         background-image: url('/img/icon/border.png'), url('/img/icon/highlight.png');
       }
+    }
+  }
+}
+
+.items .item {
+  @include breakpoint(medium, max) {
+    margin-bottom: $site-padding;
+  }
+}
+
+.item + .list {
+  @include breakpoint(medium, max) {
+    position: absolute;
+    top: 14px;
+    left: 48px;
+  }
+
+  > li {
+    > a {
+      font-size: $site-font-size-small;
     }
   }
 }

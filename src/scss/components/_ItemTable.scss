@@ -81,6 +81,7 @@ table.items {
 
       td {
         &:first-of-type {
+          position: relative;
           @include breakpoint(medium, max) {
             display: block;
           }

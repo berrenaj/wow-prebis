@@ -4,6 +4,7 @@ export default (props) => {
   const rows = props.rows || [];
   const headers = props.headers || [];
   const footers = props.footers || [];
+  const emptyText = props.emptyText || 'No results found';
 
   if (!headers.length) {
     return null;
@@ -49,7 +50,7 @@ export default (props) => {
     <table className={ props.className }>
       { headers.length > 0 && <thead><tr>{ createTableCells(headers, 'th') }</tr></thead> }
       { rows.length > 0 && <tbody>{ createTableRows(rows, 'td') }</tbody> }
-      { rows.length === 0 && <tbody><tr><td colSpan={ headers.length }>No results found</td></tr></tbody> }
+      { rows.length === 0 && <tbody><tr><td colSpan={ headers.length }>{ emptyText }</td></tr></tbody> }
       { footers.length > 0 && <tfoot><tr>{ createTableCells(footers, 'td') }</tr></tfoot> }
     </table>
   );

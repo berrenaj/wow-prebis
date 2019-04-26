@@ -223,7 +223,7 @@ export class TableLayout extends React.Component {
           <li><a onClick={ this.switchView.bind(this) } className={ this.state.view === itemFilters.WEAPON ? "active" : "" }>{ itemFilters.WEAPON }</a></li>
           <li><a onClick={ this.switchView.bind(this) } className={ this.state.view === itemFilters.ALL ? "active" : "" }>{ itemFilters.ALL }</a></li>
         </ul>
-        <Table className="items" headers={ headers } rows={ rows } />
+        <Table className="items" headers={ headers } rows={ rows } emptyText="No items found" />
       </React.Fragment>
     );
   }

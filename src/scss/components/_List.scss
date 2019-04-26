@@ -1,0 +1,6 @@
+@import '../variables';
+@import '../utilities/mixins';
+
+.list {
+	@include normallist();
+}
