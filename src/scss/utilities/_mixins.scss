@@ -10,6 +10,49 @@
   }
 }
 
+@mixin inlinelist($prefix) {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: inline-block;
+
+    &:first-of-type {
+      &:before {
+        content: $prefix ": ";
+      }
+    }
+
+    > a {
+      font-size: $site-font-size;
+      color: map-get($item-color, Agility);
+      cursor: pointer;
+
+      &.active {
+        text-decoration: underline;
+      }
+      
+      &,
+      &:hover:not(.active),
+      &:visited:not(.active) {
+        text-decoration: none;
+      }
+    }
+
+    &:after {
+      content: ",";
+      margin-right: 3px;
+    }
+
+    &:last-of-type {
+      &:after {
+        display: none;
+      }
+    }
+  }
+}
+
 @mixin clearfix(){
   &:before,
   &:after{

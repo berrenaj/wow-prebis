@@ -113,42 +113,12 @@ $classlist-item-dimension-small: 2rem;
       }
 
       > a + ul {
+        @include inlinelist("Specs");
+        
         position: absolute;
         display: none;
         left: 0;
         bottom: -$site-padding;
-        font-size: $site-font-size;
-
-        > li {
-          display: inline-block;
-
-          &:first-of-type {
-            &:before {
-              content: "Specs: ";
-            }
-          }
-
-          > a {
-            color: map-get($item-color, Agility);
-            
-            &,
-            &:hover,
-            &:visited {
-              text-decoration: none;
-            }
-          }
-
-          &:after {
-            content: ",";
-            margin-right: 3px;
-          }
-
-          &:last-of-type {
-            &:after {
-              display: none;
-            }
-          }
-        }
       }
 
       > a.active + ul {

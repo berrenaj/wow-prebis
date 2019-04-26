@@ -1,0 +1,7 @@
+@import '../variables';
+@import '../utilities/mixins';
+
+.changeview {
+  @include inlinelist("Filter items");
+  margin-bottom: $site-padding;
+}

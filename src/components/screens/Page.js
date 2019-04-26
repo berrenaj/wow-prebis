@@ -4,6 +4,13 @@ import Item from '../Item';
 import Table from '../Table';
 import '../../scss/components/_ItemTable.scss';
 import '../../scss/components/_Search.scss';
+import '../../scss/components/_ChangeView.scss';
+
+const itemFilters = {
+  WEAPON: 'Weapons',
+  ARMOR: 'Armor',
+  ALL: 'All items'
+};
 
 export class DocumentMeta extends React.Component {
   constructor(props) {
@@ -41,7 +48,8 @@ export class TableLayout extends React.Component {
     this.state = {
       items: props.items,
       search: false,
-      query: ''
+      query: '',
+      view: 'Armor'
     };
 
     this.search = React.createRef();
@@ -58,15 +66,39 @@ export class TableLayout extends React.Component {
   }
 
   getRows() {
-    return this.state.items.map((item, i) => {
+    return this.state.items.filter((item) => {
+      const weapons = ['2H Weapon', 'MH Weapon', 'OH Weapon', 'Ranged'];
+      if (this.state.view === itemFilters.ARMOR && weapons.indexOf(item.slot) < 0) {
+        return true;
+      }
+      if (this.state.view === itemFilters.WEAPON && weapons.indexOf(item.slot) >= 0) {
+        return true;
+      }
+      if (this.state.view === itemFilters.ALL) {
+        return true;
+      }
+
+      return false;
+    }).map((item, i) => {
       let r = [
         <Item {...item} />,
         <span className="label item--stat" title="Level">{ item.lvl }</span>,
-        <span className="label item--stat" title="Required Level">{ item.reqlvl }</span>,
-        <span className="label item--stat" title="Armor">{ item.armor }</span>,
-        <span className="label item--stat" title="Stamina">{ item.stamina }</span>,
-        <span className="label item--stat" title="Spirit">{ item.spirit }</span>
+        <span className="label item--stat" title="Required Level">{ item.reqlvl }</span>
       ];
+
+      if (this.state.view === itemFilters.ARMOR) {
+        r.push(<span className="label item--stat" title="Armor">{ item.armor }</span>);
+      } else if (this.state.view === itemFilters.WEAPON) {
+        r.push(<span className="label item--stat" title="Minimum Damage">{ item.damage.min }</span>);
+        r.push(<span className="label item--stat" title="Maximum Damage">{ item.damage.max }</span>);
+      } else {
+        r.push(<span className="label item--stat" title="Armor">{ item.armor }</span>);
+        r.push(<span className="label item--stat" title="Minimum Damage">{ item.damage.min }</span>);
+        r.push(<span className="label item--stat" title="Maximum Damage">{ item.damage.max }</span>);
+      }
+
+      r.push(<span className="label item--stat" title="Stamina">{ item.stamina }</span>);
+      r.push(<span className="label item--stat" title="Spirit">{ item.spirit }</span>);
 
       if (this.isMelee()) {
         r.push(<span className="label item--stat" title="Strength">{ item.strength }</span>);
@@ -116,6 +148,10 @@ export class TableLayout extends React.Component {
     }
   }
 
+  switchView(event) {
+    this.setState({ view: event.target.innerText });
+  }
+
   searchItems(event) {
     if (!event || !event.target) {
       return;
@@ -148,7 +184,22 @@ export class TableLayout extends React.Component {
   }
 
   render() {
-    let headers = [this.getNameHeader(), 'Lvl', 'Req Lvl', 'Armor', 'Stamina', 'Spirit'];
+    let headers = [this.getNameHeader(), 'Lvl', 'Req Lvl'];
+
+    if (this.state.view === itemFilters.ARMOR) {
+      headers.push('Armor');
+    } else if (this.state.view === itemFilters.WEAPON) {
+      headers.push('Min Dmg');
+      headers.push('Max Dmg');
+    } else {
+      headers.push('Armor');
+      headers.push('Min Dmg');
+      headers.push('Max Dmg');
+    }
+
+    headers.push('Stamina');
+    headers.push('Spirit');
+
     if (this.isMelee()) {
       headers = headers.concat(['Strength', 'Agility']);
     }
@@ -163,7 +214,15 @@ export class TableLayout extends React.Component {
 
     return (
       <React.Fragment>
-        <p>{rows.length} {UTILS.formatPlural(rows.length, 'item', 'items')} found</p>
+        <p>
+          {rows.length} {UTILS.formatPlural(rows.length, 'item', 'items')} found
+        </p>
+
+        <ul className="changeview">
+          <li><a onClick={ this.switchView.bind(this) } className={ this.state.view === itemFilters.ARMOR ? "active" : "" }>{ itemFilters.ARMOR }</a></li>
+          <li><a onClick={ this.switchView.bind(this) } className={ this.state.view === itemFilters.WEAPON ? "active" : "" }>{ itemFilters.WEAPON }</a></li>
+          <li><a onClick={ this.switchView.bind(this) } className={ this.state.view === itemFilters.ALL ? "active" : "" }>{ itemFilters.ALL }</a></li>
+        </ul>
         <Table className="items" headers={ headers } rows={ rows } />
       </React.Fragment>
     );
