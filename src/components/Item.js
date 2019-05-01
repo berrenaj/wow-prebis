@@ -1,6 +1,7 @@
 import React from 'react';
 import ItemIcon from './ItemIcon';
 import '../scss/components/_List.scss';
+import Connect from './Connect';
 
 const spelllist = (spells) => {
   if (spells.length === 0) {
@@ -37,14 +38,34 @@ const spelllist = (spells) => {
   );
 }
 
-export default (props) => {
+export default Connect((props) => {
+  let cls = ['item', 'item--quality' + props.quality];
+  if (props.spells.length > 0) {
+    cls.push('item--hasspells');
+  }
+
+  const add = (event) => {
+    event.preventDefault();
+
+    const item = {};
+    for (const i in props) {
+      if (typeof props[i] !== 'function'
+        && i !== 'Data'
+      ) {
+        item[i] = props[i];
+      }
+    }
+
+    props.addItemToSlot(item);
+  }
+
   return (
     <React.Fragment>
-      <a className={`item item--quality${props.quality}`} href={`https://classic.wowhead.com/item=${props.id}`} target="_blank" rel="noopener noreferrer">
+      <a onClick={ add } className={cls.join(' ')} href={`https://classic.wowhead.com/item=${props.id}`} target="_blank" rel="noopener noreferrer">
         <ItemIcon {...props } />
         { props.name }
       </a>
       { spelllist(props.spells) }
     </React.Fragment>
   );
-}
+});

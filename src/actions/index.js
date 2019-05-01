@@ -29,3 +29,12 @@ export const getEquipment = () => {
     });
   }
 };
+
+export const addItemToSlot = (item) => {
+  return (dispatch) => {
+    dispatch({
+      type: EVENTS.ADD_ITEM_TO_SLOT,
+      item: item
+    });
+  }
+};

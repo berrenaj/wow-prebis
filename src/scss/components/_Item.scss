@@ -103,7 +103,7 @@
   }
 }
 
-.items .item {
+.items .item--hasspells {
   @include breakpoint(medium, max) {
     margin-bottom: $site-padding;
   }
